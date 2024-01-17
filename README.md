@@ -1,16 +1,9 @@
-# chatapp
+# Flutter Todo App with Firebase Authentication
 
-A new Flutter project.
+A simple Todo app built using Flutter and Firebase, allowing users to create an account, log in, and perform CRUD operations on their todos.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- User authentication with email and password using Firebase Authentication.
+- CRUD operations for managing todo items.
+- Intuitive and user-friendly interface.
