@@ -42,7 +42,24 @@ class TodoAppState extends State<TodoApp> {
         title: const Text('Todo App'),
         actions: [
           IconButton(
-            onPressed: _signOut,
+            onPressed: () => showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text("SignOut"),
+                  content: const Text("Do you want to signout ?"),
+                  actions: [
+                    ElevatedButton(
+                        onPressed: _signOut, child: const Text('Yes')),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('No')),
+                  ],
+                );
+              },
+            ),
             icon: const Icon(Icons.logout_outlined),
           )
         ],
@@ -65,9 +82,23 @@ class TodoAppState extends State<TodoApp> {
                   _taskController.clear();
                 }
               },
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: 'Add a task',
-                suffixIcon: Icon(Icons.add),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.add),
+                  onPressed: () {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    if (_taskController.text != "") {
+                      addTask(_taskController.text);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Task added."),
+                        ),
+                      );
+                      _taskController.clear();
+                    }
+                  },
+                ),
               ),
             ),
             const SizedBox(height: 16.0),
