@@ -66,49 +66,58 @@ class TodoAppState extends State<TodoApp> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextField(
-              controller: _taskController,
-              onSubmitted: (value) {
-                if (value.isNotEmpty) {
-                  addTask(value);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Task added."),
-                    ),
-                  );
-                  _taskController.clear();
-                }
-              },
-              decoration: InputDecoration(
-                hintText: 'Add a task',
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: () {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                    if (_taskController.text != "") {
-                      addTask(_taskController.text);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Task added."),
-                        ),
-                      );
-                      _taskController.clear();
-                    }
-                  },
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                decoration: BoxDecoration(color: Colors.red),
+                height: 200,
+                width: MediaQuery.of(context).size.width,
+                child: Image.asset(
+                  'assets/Todo.jpg',
+                  fit: BoxFit.cover,
                 ),
               ),
-            ),
-            const SizedBox(height: 16.0),
-            const Text(
-              'Tasks:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8.0),
-            Expanded(
-              child: StreamBuilder<QuerySnapshot>(
+              TextField(
+                controller: _taskController,
+                onSubmitted: (value) {
+                  if (value.isNotEmpty) {
+                    addTask(value);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Task added."),
+                      ),
+                    );
+                    _taskController.clear();
+                  }
+                },
+                decoration: InputDecoration(
+                  hintText: 'Add a task',
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.add),
+                    onPressed: () {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      if (_taskController.text != "") {
+                        addTask(_taskController.text);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Task added."),
+                          ),
+                        );
+                        _taskController.clear();
+                      }
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              const Text(
+                'Tasks:',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8.0),
+              StreamBuilder<QuerySnapshot>(
                 stream: tasks.snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
@@ -126,16 +135,19 @@ class TodoAppState extends State<TodoApp> {
 
                   List<DocumentSnapshot> documents = snapshot.data!.docs;
 
-                  return ListView.builder(
-                    itemCount: documents.length,
-                    itemBuilder: (context, index) {
-                      return buildTaskItem(documents[index]);
-                    },
+                  return SizedBox(
+                    height: 400,
+                    child: ListView.builder(
+                      itemCount: documents.length,
+                      itemBuilder: (context, index) {
+                        return buildTaskItem(documents[index]);
+                      },
+                    ),
                   );
                 },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

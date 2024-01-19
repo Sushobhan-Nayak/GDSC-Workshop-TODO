@@ -1,3 +1,5 @@
+import 'package:chatapp/screens/gridview.dart';
+import 'package:chatapp/screens/navigation.dart';
 import 'package:chatapp/screens/todo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -126,6 +128,11 @@ class LoginScreenState extends State<LoginScreen> {
             ElevatedButton(
               onPressed: _signInWithEmailAndPassword,
               child: const Text('Sign In'),
+            ),
+            const SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NavigationScreen())),
+              child: const Text('Navigation'),
             ),
           ],
         ),
